@@ -33,6 +33,14 @@ namespace VideoWatermarkinGUI
         public MainWindow()
         {
             InitializeComponent();
+            TabControl.SelectionChanged += new SelectionChangedEventHandler((object sender, SelectionChangedEventArgs e) =>
+            {
+                inputFilePath = "";
+                outputFilePath = "";
+                EncodeFileSelectTextBox.Text = "请选择文件";
+                EncodeOutputSelectTextBox.Text = "请选择输出文件";
+                DecodeFileSelectTextBox.Text = "请选择文件";
+            });
         }
 
         private void ParseStdOut(string line)
@@ -334,7 +342,7 @@ namespace VideoWatermarkinGUI
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image Files (.jpg;.png)|*.mp4;*.png|All files (*.*)|*.*";
+            dlg.Filter = "Image Files (.jpg;.png)|*.jpg;*.png|All files (*.*)|*.*";
 
             Nullable<bool> result = dlg.ShowDialog();
 

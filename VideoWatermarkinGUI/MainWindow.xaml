@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="VideoWatermarkinGUI" Height="500" Width="800" ResizeMode="NoResize">
     <Grid>
-        <TabControl>
+        <TabControl x:Name="TabControl">
             <TabItem Header="水印嵌入" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5" >
                     <StackPanel Margin="10">
