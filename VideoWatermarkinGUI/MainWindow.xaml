@@ -1,0 +1,119 @@
+﻿<Window x:Class="VideoWatermarkinGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VideoWatermarkinGUI"
+        mc:Ignorable="d"
+        Title="VideoWatermarkinGUI" Height="500" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <TabControl>
+            <TabItem Header="水印嵌入" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5" >
+                    <StackPanel Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock>选择输入的视频文件:</TextBlock>
+                            <TextBox x:Name="EncodeFileSelectTextBox" Text="请选择文件" Grid.Row="1" />
+                            <Button x:Name="EncodeFileSelectButton" Grid.Column="1" Grid.Row="1" Click="EncodeFileSelectButton_Click" >选择文件</Button>
+                            <TextBlock Grid.Row="2">选择输出的视频文件:</TextBlock>
+                            <TextBox x:Name="EncodeOutputSelectTextBox" Text="请选择输出文件" Grid.Row="3" />
+                            <Button x:Name="EncodeOutputSelectButton" Grid.Column="1" Grid.Row="3" Click="EncodeOutputSelectButton_Click" >选择保存位置</Button>
+                        </Grid>
+                        <GroupBox Header="参数设置">
+                            <StackPanel Margin="10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0">指定水印内容:</TextBlock>
+                                    <TextBox x:Name="WatermarkContent" Text="Copyright" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1">指定水印位置:</TextBlock>
+                                    <TextBox x:Name="WatermarkPosition" Text="0.2" Grid.Row="1" Grid.Column="1" />
+                                </Grid>
+                                
+                                
+                                <CheckBox x:Name="UseYUVModeCheckbox" IsChecked="True">启用YUV模式（只嵌入到亮度，处理更快）</CheckBox>
+
+                                <CheckBox x:Name="DumpJPGCheckbox" IsChecked="False">输出JPG序列</CheckBox>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <CheckBox x:Name="SetFrameRangeCheckbox" IsChecked="False">指定处理帧范围</CheckBox>
+                                    <TextBox x:Name="FrameRangeTextBox" Text="100" Grid.Column="1" IsEnabled="{Binding ElementName=SetFrameRangeCheckbox, Path=IsChecked}" PreviewTextInput="NumberValidationTextBox"/>
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
+                        <Border Margin="5">
+                            <Button x:Name="StartEncodeButton" Height="32" Click="StartEncodeButton_Click">开始处理</Button>
+                        </Border>
+                        <Border Margin="5">
+                            <ProgressBar x:Name="EncodeProgressBar" Height="32" Minimum="0" Maximum="100" Value="0" ></ProgressBar>
+                        </Border>
+                        <Border Margin="5">
+                            <StackPanel>
+                                <TextBlock Grid.Column="0">控制台输出</TextBlock>
+                                <TextBox x:Name="EncodeConsoleOutput" AcceptsReturn="True" TextWrapping="Wrap" Height="120">
+
+                                </TextBox>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="水印提取">
+                <Grid Background="#FFE5E5E5">
+                    <StackPanel Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock>选择输入的截图文件:</TextBlock>
+                            <TextBox x:Name="DecodeFileSelectTextBox" Text="请选择文件" Grid.Row="1" />
+                            <Button x:Name="DecodeFileSelectButton" Grid.Column="1" Grid.Row="1" Click="DecodeFileSelectButton_Click" >选择文件</Button>
+                        </Grid>
+                        <Button x:Name="StartDecodeButton" Content="开始处理" Click="StartDecodeButton_Click" />
+                        <GroupBox Header="参数设置">
+                            <CheckBox x:Name="UseYUVModeDecodeCheckbox" IsChecked="True">启用YUV模式（嵌入到RGB三个通道的水印也可以只提取亮度）</CheckBox>
+                        </GroupBox>
+                        <GroupBox Header="结果" Height="340">
+                            <Grid x:Name="ImageGrid">
+                                <Image x:Name="ResultImage"
+                                       Height="{Binding ElementName=ImageGrid, Path=ActualHeight}"
+                                       Width="{Binding ElementName=ImageGrid, Path=ActualWidth}" 
+                                       HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

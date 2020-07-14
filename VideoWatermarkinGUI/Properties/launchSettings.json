@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VideoWatermarkinGUI": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\sam_nya\\source\\repos\\VideoWatermarking\\x64\\Release"
+    }
+  }
+}

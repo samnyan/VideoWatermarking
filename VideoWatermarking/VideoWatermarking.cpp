@@ -377,12 +377,19 @@ cv::Mat getWatermark(cv::Mat& src) {
     //离散傅里叶变换
     cv::dft(complete, complete);
 
+    //分离实部和虚部
     split(complete, planes);
     magnitude(planes[0], planes[1], planes[0]);
     magnitudeImage = planes[0];
+
+    //对数运算
     magnitudeImage += cv::Scalar::all(1);
     log(magnitudeImage, magnitudeImage);
+
+    //裁剪
     magnitudeImage = magnitudeImage(cv::Rect(0, 0, src.cols, src.rows));
+
+    //标准化到0~1
     normalize(magnitudeImage, magnitudeImage, 0, 1, cv::NORM_MINMAX);
 
     int cx = magnitudeImage.cols / 2;
