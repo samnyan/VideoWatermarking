@@ -145,7 +145,7 @@ namespace VideoWatermarkinGUI
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".mp4";
-            dlg.Filter = "Video Files (.mp4)|*.mp4";
+            dlg.Filter = "Video Files (.mp4)|*.mp4|All files (*.*)|*.*";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -317,7 +317,7 @@ namespace VideoWatermarkinGUI
                     process.Close();
                     this.Dispatcher.Invoke(() =>
                     {
-                        ResultImage.Source = new BitmapImage(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "decoded_0.jpg")));
+                        ResultImage.Source = new BitmapImage(new Uri(System.IO.Path.Combine(inputFilePath + "_decoded_0.jpg")));
                     });
                 }
                 catch (Exception e)

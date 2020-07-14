@@ -74,6 +74,12 @@ int main(int argc, char** argv)
 
                 // 加载图片
                 src = cv::imread(file, cv::IMREAD_COLOR);
+
+                if (src.empty()) {
+                    fprintf(stderr, "图片读取失败%s\n", file.c_str());
+                    return 1;
+                }
+
                 vector<cv::Mat> result;
                 if (vm.count("yuv")) {
                     result = getWatermarkYUV(src);
@@ -84,10 +90,10 @@ int main(int argc, char** argv)
 
                 src.release();
 
-                string outfile = "decoded_";
+                string outfile = file + "_decoded_";
                 for (int i = 0; i < result.size(); i++) {
                     cv::imwrite(outfile + std::to_string(i) + ".jpg", result[i]);
-                    fprintf(stderr, "文件已保存%s\n", outfile);
+                    fprintf(stderr, "文件已保存%s\n", outfile.c_str());
                 }
                 return 0;
             }
@@ -96,7 +102,7 @@ int main(int argc, char** argv)
 
                 cv::VideoCapture inputVideo(file);
                 if (!inputVideo.isOpened()) {
-                    fprintf(stderr, "视频读取失败%s\n", file);
+                    fprintf(stderr, "视频读取失败%s\n", file.c_str());
                     return 1;
                 }
 
@@ -159,7 +165,7 @@ int main(int argc, char** argv)
                     if (dumpFrame) {
                         string outfile = "frame" + std::to_string(currentFrameCount) + ".jpg";
                         cv::imwrite(outfile, result);
-                        fprintf(stderr, "文件已保存%s\n", outfile);
+                        fprintf(stderr, "文件已保存%s\n", outfile.c_str());
                     }
 
                     fprintf(stderr, "Frame %d / %d\r", currentFrameCount, totalFrameCount);
